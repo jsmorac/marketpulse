@@ -17,6 +17,9 @@ dependencies = [
     "pydantic-settings>=2.2",
     "sqlalchemy>=2.0",
     "psycopg[binary]>=3.1",
+    "alembic>=1.13",
+    "psycopg2-binary>=2.9",
+    "python-dotenv>=1.0",
 ]
 
 # Optional dependency groups. Install only what a given task needs, e.g.:
