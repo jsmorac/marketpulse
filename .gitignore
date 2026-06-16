@@ -34,4 +34,7 @@ dbt/logs/
 .vscode/
 .idea/
 .DS_Store
-Thumbs.db
+Thumbs.dbs
+
+# ----- Scratch / temp -----
+scratch_ingest.py
