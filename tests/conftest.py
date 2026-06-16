@@ -12,16 +12,16 @@ def sample_jobs() -> list[HimalayasJob]:
 
 @pytest.fixture
 def db_conn():
-    psycopg = pytest.importorskip("psycopg")
+    pytest.importorskip("psycopg")
     from db.connection import connect
 
     try:
         conn = connect()
-    except psycopg.OperationalError:
-        pytest.skip("Postgres no disponible (¿Docker arriba?)")
+    except Exception:  # KeyError (sin .env) o OperationalError (sin Postgres)
+        pytest.skip("Postgres no disponible")
     conn.autocommit = False
     try:
         yield conn
     finally:
-        conn.rollback()  # deshace todo lo que el test insertó
+        conn.rollback()
         conn.close()
