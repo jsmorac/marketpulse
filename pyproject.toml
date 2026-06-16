@@ -44,7 +44,7 @@ dashboard = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["ingestion*", "analytics*", "orchestration*"]
+include = ["ingestion*", "analytics*", "orchestration*", "db*"]
 
 [tool.ruff]
 line-length = 100
@@ -58,3 +58,4 @@ select = ["E", "W", "F", "I", "B", "UP"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+pythonpath = ["."]
