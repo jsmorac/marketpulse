@@ -36,7 +36,7 @@ orchestration = [
     "dagster-webserver>=1.7",
 ]
 transform = [
-    "dbt-postgres>=1.8",
+    "dbt-postgres>=1.8,<1.12",
 ]
 dashboard = [
     "streamlit>=1.36",
