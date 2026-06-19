@@ -22,3 +22,11 @@ models:
 
 flags:
   send_anonymous_usage_stats: false
+
+seeds:
+  marketpulse:
+    known_technologies:
+      +column_types:
+        technology: varchar
+        keyword: varchar
+        tech_group: varchar

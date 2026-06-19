@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: int_himalayas_job_categories
+    description: >
+      Una fila por (job, categoría, snapshot_date). Explota el array de
+      categorías del staging para poder contar cada categoría por separado.
+    columns:
+      - name: source_job_id
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: category
+        tests: [not_null]

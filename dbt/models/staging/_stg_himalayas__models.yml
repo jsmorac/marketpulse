@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_himalayas_jobs
+    description: >
+      Vista de staging sobre raw.himalayas_jobs. Desempaca el payload JSONB
+      en columnas tipadas — una fila por job por snapshot_date. Solo renombra
+      y tipifica; la lógica de negocio vive en intermediate y marts.
+    columns:
+      - name: source_job_id
+        description: ID único del job en Himalayas (guid).
+        tests: [not_null]
+      - name: snapshot_date
+        description: Fecha del snapshot diario de ingesta.
+        tests: [not_null]
+      - name: title
+        description: Título del puesto de trabajo.
+        tests: [not_null]
+      - name: company_name
+        description: Nombre de la empresa que publicó el job.
+      - name: categories
+        description: Array JSONB de categorías/tags asignados por Himalayas al job.
+      - name: min_salary
+        description: Salario mínimo en USD (null si no fue publicado).
+      - name: max_salary
+        description: Salario máximo en USD (null si no fue publicado).
+      - name: pub_date
+        description: Fecha de publicación del job en Himalayas.

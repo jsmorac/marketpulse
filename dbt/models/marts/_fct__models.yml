@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: fct_tech_demand
+    description: >
+      Tabla de hechos central de MarketPulse. Una fila por (tecnología, día),
+      con el conteo de jobs únicos que mencionan esa tecnología en sus categorías.
+      Las categorías de Himalayas se traducen a tecnologías limpias vía
+      known_technologies (match por keyword). Lo que no hace match queda en 'other'.
+    columns:
+      - name: snapshot_date
+        description: Fecha del snapshot diario de ingesta.
+        tests: [not_null]
+      - name: technology
+        description: Nombre limpio de la tecnología (o 'other' si no hizo match).
+        tests: [not_null]
+      - name: tech_group
+        description: Grupo de la tecnología (language, framework, ml, data_eng, etc.).
+        tests: [not_null]
+      - name: job_count
+        description: Número de jobs únicos que mencionan esta tecnología en este día.
+        tests: [not_null]

@@ -1,0 +1,61 @@
+technology,keyword,tech_group
+Python,Python,language
+JavaScript,JavaScript,language
+TypeScript,TypeScript,language
+Java,Java,language
+Go,Golang,language
+C#,C-Sharp,language
+C++,C-Plus-Plus,language
+Rust,Rust,language
+PHP,PHP,language
+Ruby,Ruby,language
+SQL,SQL,language
+React,React,framework
+Angular,Angular,framework
+Vue,Vue,framework
+Next.js,Next-js,framework
+Node.js,Node-js,framework
+FastAPI,FastAPI,framework
+Django,Django,framework
+Flask,Flask,framework
+Spring,Spring,framework
+Ruby on Rails,Rails,framework
+GraphQL,GraphQL,framework
+PyTorch,PyTorch,ml
+TensorFlow,TensorFlow,ml
+Machine Learning,Machine-Learning,ml
+Artificial Intelligence,AI,ml
+LLM,LLM,ml
+NLP,NLP,ml
+Computer Vision,Computer-Vision,ml
+Data Science,Data-Science,ml
+Apache Spark,Spark,data_eng
+Big Data,Big-Data,data_eng
+Airflow,Airflow,data_eng
+dbt,dbt,data_eng
+Snowflake,Snowflake,data_eng
+BigQuery,BigQuery,data_eng
+Databricks,Databricks,data_eng
+Kafka,Kafka,data_eng
+ETL,ETL,data_eng
+PostgreSQL,Postgre,database
+MySQL,MySQL,database
+MongoDB,MongoDB,database
+Redis,Redis,database
+Elasticsearch,Elasticsearch,database
+AWS,AWS,cloud
+Azure,Azure,cloud
+GCP,Google-Cloud,cloud
+Docker,Docker,devops
+Kubernetes,Kubernetes,devops
+Terraform,Terraform,devops
+CI/CD,CI-CD,devops
+DevOps,DevOps,devops
+Linux,Linux,devops
+Backend,Backend,role_discipline
+Frontend,Frontend,role_discipline
+Full Stack,Full-Stack,role_discipline
+Data Engineering,Data-Engineering,role_discipline
+QA/Testing,QA,role_discipline
+Security,Security,role_discipline
+Blockchain,Blockchain,domain
