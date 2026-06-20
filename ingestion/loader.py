@@ -1,20 +1,30 @@
-# ingestion/loader.py
 from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
-from typing import Any
+from typing import Any, Protocol
 from uuid import uuid4
 
 from psycopg import Connection
 from psycopg.types.json import Jsonb
 
 from db.connection import connect
-from ingestion.himalayas import HimalayasJob
 
-_UPSERT_SQL = """
-INSERT INTO raw.himalayas_jobs
+
+class LoadableJob(Protocol):
+    """Cualquier job que el loader pueda procesar.
+
+    Solo exige un campo: guid (el ID único en la fuente).
+    El resto va al payload como JSON.
+    """
+
+    guid: str | int
+
+
+def _upsert_sql(table: str) -> str:
+    return f"""
+INSERT INTO raw.{table}
     (source, source_job_id, snapshot_date, run_id, payload, loaded_at)
 VALUES
     (%(source)s, %(source_job_id)s, %(snapshot_date)s, %(run_id)s, %(payload)s, now())
@@ -38,11 +48,16 @@ class LoadResult:
         return self.inserted + self.updated
 
 
-def job_to_row(job: HimalayasJob, snapshot_date: date, run_id: str) -> dict[str, Any]:
-    """Función PURA: HimalayasJob -> fila. Sin BD, fácil de testear."""
+def job_to_row(
+    job: LoadableJob,
+    source: str,
+    snapshot_date: date,
+    run_id: str,
+) -> dict[str, Any]:
+    """Función PURA: job -> fila. Sin BD, fácil de testear."""
     return {
-        "source": "himalayas",
-        "source_job_id": str(job.guid),  # <-- ÚNICO punto acoplado al modelo
+        "source": source,
+        "source_job_id": str(job.guid),
         "snapshot_date": snapshot_date,
         "run_id": run_id,
         "payload": job.model_dump(mode="json"),
@@ -50,8 +65,10 @@ def job_to_row(job: HimalayasJob, snapshot_date: date, run_id: str) -> dict[str,
 
 
 def load_jobs(
-    jobs: Sequence[HimalayasJob],
+    jobs: Sequence[LoadableJob],
     *,
+    source: str,
+    table: str,
     snapshot_date: date | None = None,
     run_id: str | None = None,
     conn: Connection | None = None,
@@ -59,18 +76,19 @@ def load_jobs(
     snapshot_date = snapshot_date or datetime.now(UTC).date()
     run_id = run_id or str(uuid4())
 
-    rows = [job_to_row(j, snapshot_date, run_id) for j in jobs]
+    rows = [job_to_row(j, source, snapshot_date, run_id) for j in jobs]
     if not rows:
         return LoadResult(0, 0, snapshot_date, run_id)
 
     params = [{**r, "payload": Jsonb(r["payload"])} for r in rows]
+    sql = _upsert_sql(table)
 
     own_conn = conn is None
     conn = conn or connect()
     try:
         inserted = updated = 0
         with conn.cursor() as cur:
-            cur.executemany(_UPSERT_SQL, params, returning=True)
+            cur.executemany(sql, params, returning=True)
             while True:
                 rec = cur.fetchone()
                 if rec is not None:
