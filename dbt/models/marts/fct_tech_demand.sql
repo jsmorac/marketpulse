@@ -3,7 +3,7 @@ with job_categories as (
         source_job_id,
         snapshot_date,
         category
-    from {{ ref('int_himalayas_job_categories') }}
+    from {{ ref('int_job_categories') }}
 ),
 
 tech_lookup as (

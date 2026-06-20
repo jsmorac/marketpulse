@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_remoteok_jobs
+    description: >
+      Vista de staging sobre raw.remoteok_jobs. Normaliza el formato de
+      RemoteOK al esquema común — nota que 'tags' se renombra a 'categories'
+      para unificar con Himalayas. Una fila por job por snapshot_date.
+    columns:
+      - name: source_job_id
+        description: ID único del job en RemoteOK.
+        tests: [not_null]
+      - name: snapshot_date
+        description: Fecha del snapshot diario de ingesta.
+        tests: [not_null]
+      - name: title
+        description: Título del puesto (mapeado desde 'position').
+        tests: [not_null]
+      - name: categories
+        description: Array JSONB de tags (renombrado desde 'tags').
+      - name: company_name
+        description: Nombre de la empresa.

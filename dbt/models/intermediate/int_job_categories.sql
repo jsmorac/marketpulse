@@ -1,20 +1,22 @@
-with staging as (
-    select
-        source_job_id,
-        snapshot_date,
-        categories
+with all_jobs as (
+    select source_job_id, snapshot_date, categories
     from {{ ref('stg_himalayas_jobs') }}
+
+    union all
+
+    select source_job_id, snapshot_date, categories
+    from {{ ref('stg_remoteok_jobs') }}
 ),
 
 exploded as (
     select distinct
-        s.source_job_id,
-        s.snapshot_date,
+        j.source_job_id,
+        j.snapshot_date,
         trim(cat.value) as category
-    from staging s
+    from all_jobs j
     cross join lateral jsonb_array_elements_text(
         case
-            when jsonb_typeof(s.categories) = 'array' then s.categories
+            when jsonb_typeof(j.categories) = 'array' then j.categories
             else '[]'::jsonb
         end
     ) as cat(value)

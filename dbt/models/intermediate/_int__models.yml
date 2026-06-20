@@ -1,10 +1,13 @@
 version: 2
 
 models:
-  - name: int_himalayas_job_categories
+  - name: int_job_categories
     description: >
       Una fila por (job, categoría, snapshot_date). Explota el array de
-      categorías del staging para poder contar cada categoría por separado.
+      categorías de todas las fuentes (Himalayas, RemoteOK) para poder
+      contar cada categoría por separado. Todas las fuentes se unifican
+      aquí gracias a que el staging normaliza 'tags'/'categories' al
+      mismo nombre.
     columns:
       - name: source_job_id
         tests: [not_null]
