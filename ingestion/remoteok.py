@@ -63,7 +63,7 @@ def fetch_jobs(limit: int | None = None) -> list[RemoteOKJob]:
     jobs_raw = [item for item in data if "id" in item]
 
     jobs = []
-    for raw in (jobs_raw[:limit] if limit else jobs_raw):
+    for raw in jobs_raw[:limit] if limit else jobs_raw:
         try:
             jobs.append(RemoteOKJob.model_validate(raw))
         except Exception:

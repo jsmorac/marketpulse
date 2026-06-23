@@ -5,6 +5,7 @@ from dagster import asset
 from ingestion.loader import load_jobs
 from ingestion.remoteok import fetch_jobs
 
+
 @asset(group_name="ingestion")
 def remoteok_raw_jobs() -> None:
     """Fetch all jobs from RemoteOK and load into raw.remoteok_jobs."""
