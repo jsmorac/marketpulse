@@ -46,7 +46,7 @@ class RemoteOKJob(BaseModel):
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=2, max=10),
 )
-def fetch_jobs(limit: int = 100) -> list[RemoteOKJob]:
+def fetch_jobs(limit: int | None = None) -> list[RemoteOKJob]:
     """Trae los primeros `limit` jobs de RemoteOK.
 
     El primer objeto del array es metadata legal — lo saltamos.
@@ -63,7 +63,7 @@ def fetch_jobs(limit: int = 100) -> list[RemoteOKJob]:
     jobs_raw = [item for item in data if "id" in item]
 
     jobs = []
-    for raw in jobs_raw[:limit]:
+    for raw in (jobs_raw[:limit] if limit else jobs_raw):
         try:
             jobs.append(RemoteOKJob.model_validate(raw))
         except Exception:

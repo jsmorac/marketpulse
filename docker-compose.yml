@@ -17,5 +17,61 @@ services:
       timeout: 5s
       retries: 5
 
+  dagster-webserver:
+    build: .
+    container_name: marketpulse-dagster-webserver
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DAGSTER_HOME: /app/dagster_home
+    command: dagster-webserver -h 0.0.0.0 -p 3000 -w workspace.yaml
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  dagster-daemon:
+    build: .
+    container_name: marketpulse-dagster-daemon
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DAGSTER_HOME: /app/dagster_home
+    command: dagster-daemon run -w workspace.yaml
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  streamlit:
+    build: .
+    container_name: marketpulse-streamlit
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PYTHONPATH: /app
+    command: python -m streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: marketpulse-uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - kuma-data:/app/data
+
 volumes:
   pgdata:
+  kuma-data:

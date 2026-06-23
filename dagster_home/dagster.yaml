@@ -1,0 +1,12 @@
+storage:
+  postgres:
+    postgres_db:
+      username:
+        env: DB_USER
+      password:
+        env: DB_PASSWORD
+      hostname:
+        env: DB_HOST
+      db_name:
+        env: DB_NAME
+      port: 5432

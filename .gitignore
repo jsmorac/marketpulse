@@ -40,3 +40,6 @@ Thumbs.dbs
 # ----- Scratch / temp -----
 scratch_ingest.py
 scratch_remoteok.py
+
+dagster_home/*
+!dagster_home/dagster.yaml
