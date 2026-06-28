@@ -20,7 +20,7 @@ class HimalayasJob(BaseModel):
     guid: str
     title: str
     company_name: str = Field(alias="companyName")
-    company_slug: str = Field(alias="companySlug")
+    company_slug: str | None = Field(alias="companySlug", default=None)
     company_logo: str | None = Field(alias="companyLogo", default=None)
     employment_type: str | None = Field(alias="employmentType", default=None)
     seniority: list[str] = Field(default_factory=list)
