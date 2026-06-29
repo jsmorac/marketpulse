@@ -1,61 +1,93 @@
-technology,keyword,tech_group
-Python,Python,language
-JavaScript,JavaScript,language
-TypeScript,TypeScript,language
-Java,Java,language
-Go,Golang,language
-C#,C-Sharp,language
-C++,C-Plus-Plus,language
-Rust,Rust,language
-PHP,PHP,language
-Ruby,Ruby,language
-SQL,SQL,language
-React,React,framework
-Angular,Angular,framework
-Vue,Vue,framework
-Next.js,Next-js,framework
-Node.js,Node-js,framework
-FastAPI,FastAPI,framework
-Django,Django,framework
-Flask,Flask,framework
-Spring,Spring,framework
-Ruby on Rails,Rails,framework
-GraphQL,GraphQL,framework
-PyTorch,PyTorch,ml
-TensorFlow,TensorFlow,ml
-Machine Learning,Machine-Learning,ml
-Artificial Intelligence,AI,ml
-LLM,LLM,ml
-NLP,NLP,ml
-Computer Vision,Computer-Vision,ml
-Data Science,Data-Science,ml
-Apache Spark,Spark,data_eng
-Big Data,Big-Data,data_eng
-Airflow,Airflow,data_eng
-dbt,dbt,data_eng
-Snowflake,Snowflake,data_eng
-BigQuery,BigQuery,data_eng
-Databricks,Databricks,data_eng
-Kafka,Kafka,data_eng
-ETL,ETL,data_eng
-PostgreSQL,Postgre,database
-MySQL,MySQL,database
-MongoDB,MongoDB,database
-Redis,Redis,database
-Elasticsearch,Elasticsearch,database
-AWS,AWS,cloud
-Azure,Azure,cloud
-GCP,Google-Cloud,cloud
-Docker,Docker,devops
-Kubernetes,Kubernetes,devops
-Terraform,Terraform,devops
-CI/CD,CI-CD,devops
-DevOps,DevOps,devops
-Linux,Linux,devops
-Backend,Backend,role_discipline
-Frontend,Frontend,role_discipline
-Full Stack,Full-Stack,role_discipline
-Data Engineering,Data-Engineering,role_discipline
-QA/Testing,QA,role_discipline
-Security,Security,role_discipline
-Blockchain,Blockchain,domain
+technology,tech_group,alias
+Python,language,python
+JavaScript,language,javascript
+TypeScript,language,typescript
+Java,language,java
+Go,language,golang
+C#,language,c#
+C#,language,csharp
+C#,language,dotnet
+C++,language,c++
+C++,language,cplusplus
+Rust,language,rust
+PHP,language,php
+Ruby,language,ruby
+SQL,language,sql
+React,framework,react
+Angular,framework,angular
+Vue,framework,vue
+Vue,framework,vuejs
+Vue,framework,vue.js
+Next.js,framework,nextjs
+Next.js,framework,next.js
+Node.js,framework,nodejs
+Node.js,framework,node.js
+FastAPI,framework,fastapi
+Django,framework,django
+Flask,framework,flask
+Spring,framework,spring
+Ruby on Rails,framework,rails
+GraphQL,framework,graphql
+PyTorch,ml,pytorch
+TensorFlow,ml,tensorflow
+Machine Learning,ml,machine learning
+Artificial Intelligence,ml,ai
+Artificial Intelligence,ml,artificial intelligence
+LLM,ml,llm
+LLM,ml,llms
+NLP,ml,nlp
+Computer Vision,ml,computer vision
+Data Science,ml,data science
+Data Science,ml,data scientist
+Apache Spark,data_eng,spark
+Big Data,data_eng,big data
+Airflow,data_eng,airflow
+dbt,data_eng,dbt
+Snowflake,data_eng,snowflake
+BigQuery,data_eng,bigquery
+BigQuery,data_eng,big query
+Databricks,data_eng,databricks
+Kafka,data_eng,kafka
+ETL,data_eng,etl
+Data Engineering,data_eng,data engineering
+Data Engineering,data_eng,data engineer
+PostgreSQL,database,postgresql
+PostgreSQL,database,postgres
+MySQL,database,mysql
+MongoDB,database,mongodb
+MongoDB,database,mongo
+Redis,database,redis
+Elasticsearch,database,elasticsearch
+Elasticsearch,database,elastic search
+AWS,cloud,aws
+AWS,cloud,amazon web services
+Azure,cloud,azure
+GCP,cloud,gcp
+GCP,cloud,google cloud
+Docker,devops,docker
+Kubernetes,devops,kubernetes
+Kubernetes,devops,k8s
+Terraform,devops,terraform
+CI/CD,devops,ci cd
+CI/CD,devops,cicd
+DevOps,devops,devops
+Linux,devops,linux
+Backend,role_discipline,backend
+Backend,role_discipline,backend development
+Backend,role_discipline,back end
+Frontend,role_discipline,frontend
+Frontend,role_discipline,front end
+Full Stack,role_discipline,full stack
+Full Stack,role_discipline,fullstack
+QA/Testing,role_discipline,qa
+QA/Testing,role_discipline,testing
+QA/Testing,role_discipline,quality assurance
+Security,role_discipline,security
+Security,role_discipline,infosec
+Security,role_discipline,cybersecurity
+Security,role_discipline,cyber security
+Software Engineering,role_discipline,software engineering
+Software Engineering,role_discipline,software engineer
+Software Engineering,role_discipline,software development
+Blockchain,domain,blockchain
+Blockchain,domain,web3

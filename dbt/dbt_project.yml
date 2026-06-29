@@ -28,5 +28,5 @@ seeds:
     known_technologies:
       +column_types:
         technology: varchar
-        keyword: varchar
         tech_group: varchar
+        alias: varchar
