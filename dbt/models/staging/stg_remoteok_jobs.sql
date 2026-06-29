@@ -4,7 +4,7 @@ with source as (
 
 renamed as (
     select
-        source
+        source,
         source_job_id,
         snapshot_date,
         loaded_at,
