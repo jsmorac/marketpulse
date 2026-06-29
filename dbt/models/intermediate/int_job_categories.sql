@@ -1,15 +1,16 @@
 with all_jobs as (
-    select source_job_id, snapshot_date, categories
+    select source, source_job_id, snapshot_date, categories
     from {{ ref('stg_himalayas_jobs') }}
 
     union all
 
-    select source_job_id, snapshot_date, categories
+    select source, source_job_id, snapshot_date, categories
     from {{ ref('stg_remoteok_jobs') }}
 ),
 
 exploded as (
     select distinct
+        j.source,
         j.source_job_id,
         j.snapshot_date,
         trim(cat.value) as category
@@ -22,6 +23,6 @@ exploded as (
     ) as cat(value)
 )
 
-select source_job_id, snapshot_date, category
+select source, source_job_id, snapshot_date, category
 from exploded
 where category is not null and category <> ''

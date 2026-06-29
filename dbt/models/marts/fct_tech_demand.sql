@@ -1,8 +1,7 @@
 with job_categories as (
     select
-        source_job_id,
+        source || ':' || source_job_id as job_key,
         snapshot_date,
-        -- normaliza: minúsculas, mapea techs con símbolos, separadores -> un espacio, y rodea con espacios
         ' ' || regexp_replace(
             replace(replace(lower(category), 'c#', 'csharp'), 'c++', 'cplusplus'),
             '[^a-z0-9]+', ' ', 'g'
@@ -21,11 +20,10 @@ tech_aliases as (
     from {{ ref('known_technologies') }}
 ),
 
--- un job cuenta para una tecnología si ALGUNA de sus categorías contiene un alias como palabra completa
 job_tech as (
     select distinct
         jc.snapshot_date,
-        jc.source_job_id,
+        jc.job_key,
         ta.technology,
         ta.tech_group
     from job_categories jc
@@ -33,36 +31,33 @@ job_tech as (
         on jc.category_norm like '%' || ta.alias_norm || '%'
 ),
 
--- jobs que no hicieron match con ninguna tecnología -> 'other' (a nivel de job, sin solaparse)
 all_jobs as (
-    select distinct snapshot_date, source_job_id
+    select distinct snapshot_date, job_key
     from job_categories
 ),
 
 unmatched as (
     select
         aj.snapshot_date,
-        aj.source_job_id,
+        aj.job_key,
         'other' as technology,
         'other' as tech_group
     from all_jobs aj
     left join job_tech jt
-        on aj.source_job_id = jt.source_job_id
+        on aj.job_key = jt.job_key
        and aj.snapshot_date = jt.snapshot_date
-    where jt.source_job_id is null
-),
-
-combined as (
-    select * from job_tech
-    union all
-    select * from unmatched
+    where jt.job_key is null
 )
 
 select
     snapshot_date,
     technology,
     tech_group,
-    count(distinct source_job_id) as job_count
-from combined
+    count(distinct job_key) as job_count
+from (
+    select * from job_tech
+    union all
+    select * from unmatched
+) combined
 group by snapshot_date, technology, tech_group
 order by snapshot_date desc, job_count desc
