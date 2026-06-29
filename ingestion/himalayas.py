@@ -72,19 +72,19 @@ def fetch_jobs(offset: int = 0, limit: int = DEFAULT_LIMIT) -> tuple[list[Himala
     return jobs, total_count
 
 
-def fetch_all_jobs() -> list[HimalayasJob]:
-    """Fetch every available job by paginating through the API."""
+def fetch_all_jobs(max_jobs: int = 1000) -> list[HimalayasJob]:
+    """Fetch up to max_jobs jobs by paginating through the API."""
     all_jobs: list[HimalayasJob] = []
 
     first_page, total_count = fetch_jobs(offset=0)
     all_jobs.extend(first_page)
     offset = len(first_page)
 
-    while offset < total_count:
+    while offset < min(total_count, max_jobs):
         page, _ = fetch_jobs(offset=offset)
         if not page:
             break
         all_jobs.extend(page)
         offset += len(page)
 
-    return all_jobs
+    return all_jobs[:max_jobs]
