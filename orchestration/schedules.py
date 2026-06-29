@@ -1,12 +1,10 @@
-"""Dagster schedules — daily ingestion pipeline."""
+"""Dagster schedules — daily full pipeline (ingest + transform)."""
 
 from dagster import AssetSelection, DefaultScheduleStatus, ScheduleDefinition
 
-from orchestration.assets.ingestion.himalayas_asset import himalayas_raw_jobs
-
-daily_ingestion_schedule = ScheduleDefinition(
-    name="daily_himalayas_ingestion",
+daily_pipeline_schedule = ScheduleDefinition(
+    name="daily_pipeline",
     cron_schedule="0 6 * * *",
-    target=AssetSelection.assets(himalayas_raw_jobs),
+    target=AssetSelection.all(),
     default_status=DefaultScheduleStatus.RUNNING,
 )
