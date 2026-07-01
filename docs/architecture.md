@@ -74,3 +74,30 @@ backup is not a backup.
 All four sources require attribution with a direct link. Attribution strings
 are centralized in `ingestion/sources.py` and surfaced in the dashboard footer
 and the README.
+
+## Matching de tecnologías: substring → palabra completa con alias
+
+**Problema.** La v1 mapeaba categorías de jobs a tecnologías con `category ILIKE
+'%keyword%'` (una keyword por tecnología). Eso fallaba de dos formas: (1) falsos
+positivos por substring — `Java` matcheaba dentro de `javascript`, `AI` dentro de
+`email`; y (2) un solo formato — las keywords con guion (`Next-js`, `CI-CD`) no
+matcheaban los tags de RemoteOK con punto/barra (`next.js`, `ci/cd`).
+
+**Decisión.** (a) Seed reestructurado a varios *alias* por tecnología (una fila por
+alias). (b) Match por *palabra completa*: se normaliza categoría y alias (minúsculas,
+separadores `-./_` → espacio, `c#`/`c++` → `csharp`/`cplusplus`) y se rodean de
+espacios, de modo que el match exige límites de palabra. Esto elimina los falsos
+positivos y unifica los formatos de ambas fuentes a la vez. (c) El bucket `other` pasó
+a ser a nivel de job (un job es `other` solo si no matcheó ninguna tecnología), para
+que el "% sin clasificar" sea honesto y no se solape con los matcheados.
+
+**Resultado.** De 14 a 44 tecnologías clasificadas; `other` de 71% a 50%; falsos
+positivos de Java/AI eliminados.
+
+**Trade-off.** Exigir palabra completa obliga a curar alias buenos (ej. `Postgre` ya no
+matchea `postgresql`, hay que listar `postgres`/`postgresql`). Más mantenimiento del
+seed a cambio de precisión.
+
+**Limitación conocida / roadmap.** Las *categorías* de ambas fuentes describen sobre
+todo funciones (Sales, Software Engineering), no herramientas. La señal fina de tools
+vive en el título/descripción del job — extraerla de ahí es el próximo salto.

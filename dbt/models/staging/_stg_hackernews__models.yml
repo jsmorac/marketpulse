@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_hackernews_jobs
+    description: >
+      Vista de staging sobre raw.hackernews_jobs. Desempaca el payload JSONB
+      en columnas tipadas — una fila por comentario top-level (= una oferta)
+      del hilo mensual "Who is hiring?" de Hacker News. Solo renombra y tipifica;
+      la extracción de tecnologías desde el texto libre vive en intermediate.
+    columns:
+      - name: source_job_id
+        description: ID único del comentario en Hacker News (item id de Algolia).
+        tests: [not_null]
+      - name: snapshot_date
+        description: Fecha del snapshot de ingesta (el hilo es mensual, no diario).
+        tests: [not_null]
+      - name: author
+        description: Usuario de Hacker News que publicó la oferta.
+      - name: body_html
+        description: >
+          Texto crudo del comentario en HTML. No hay campos estructurados
+          (título, empresa, tecnologías) — todo vive en este bloque de texto
+          libre y se extrae en la capa intermediate.
+        tests: [not_null]
+      - name: posted_at
+        description: Fecha y hora de publicación del comentario en Hacker News.
+      - name: story_id
+        description: ID del hilo mensual "Who is hiring?" al que pertenece el comentario.
