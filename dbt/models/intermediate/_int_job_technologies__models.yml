@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: int_job_technologies
+    description: >
+      Una fila por (oferta, tecnología, snapshot_date). Combina matches por
+      categoría (Himalayas/RemoteOK) y por texto libre (HN). Base compartida
+      de fct_tech_demand (diario) y fct_tech_demand_cumulative (histórico).
+    columns:
+      - name: job_key
+        description: "source:source_job_id — identifica la oferta de forma única."
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: technology
+        tests: [not_null]

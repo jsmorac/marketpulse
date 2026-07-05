@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: fct_tech_demand_cumulative
+    description: >
+      Demanda acumulada por tecnología sobre TODA la historia. Cuenta cada
+      oferta una sola vez (count distinct job_key), sin importar en cuántos
+      snapshots diarios apareció — evita inflar el conteo por ofertas que
+      llevan varios días publicadas.
+    columns:
+      - name: technology
+        tests: [not_null]
+      - name: job_count
+        tests: [not_null]

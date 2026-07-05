@@ -1,93 +1,93 @@
-technology,tech_group,alias
-Python,language,python
-JavaScript,language,javascript
-TypeScript,language,typescript
-Java,language,java
-Go,language,golang
-C#,language,c#
-C#,language,csharp
-C#,language,dotnet
-C++,language,c++
-C++,language,cplusplus
-Rust,language,rust
-PHP,language,php
-Ruby,language,ruby
-SQL,language,sql
-React,framework,react
-Angular,framework,angular
-Vue,framework,vue
-Vue,framework,vuejs
-Vue,framework,vue.js
-Next.js,framework,nextjs
-Next.js,framework,next.js
-Node.js,framework,nodejs
-Node.js,framework,node.js
-FastAPI,framework,fastapi
-Django,framework,django
-Flask,framework,flask
-Spring,framework,spring
-Ruby on Rails,framework,rails
-GraphQL,framework,graphql
-PyTorch,ml,pytorch
-TensorFlow,ml,tensorflow
-Machine Learning,ml,machine learning
-Artificial Intelligence,ml,ai
-Artificial Intelligence,ml,artificial intelligence
-LLM,ml,llm
-LLM,ml,llms
-NLP,ml,nlp
-Computer Vision,ml,computer vision
-Data Science,ml,data science
-Data Science,ml,data scientist
-Apache Spark,data_eng,spark
-Big Data,data_eng,big data
-Airflow,data_eng,airflow
-dbt,data_eng,dbt
-Snowflake,data_eng,snowflake
-BigQuery,data_eng,bigquery
-BigQuery,data_eng,big query
-Databricks,data_eng,databricks
-Kafka,data_eng,kafka
-ETL,data_eng,etl
-Data Engineering,data_eng,data engineering
-Data Engineering,data_eng,data engineer
-PostgreSQL,database,postgresql
-PostgreSQL,database,postgres
-MySQL,database,mysql
-MongoDB,database,mongodb
-MongoDB,database,mongo
-Redis,database,redis
-Elasticsearch,database,elasticsearch
-Elasticsearch,database,elastic search
-AWS,cloud,aws
-AWS,cloud,amazon web services
-Azure,cloud,azure
-GCP,cloud,gcp
-GCP,cloud,google cloud
-Docker,devops,docker
-Kubernetes,devops,kubernetes
-Kubernetes,devops,k8s
-Terraform,devops,terraform
-CI/CD,devops,ci cd
-CI/CD,devops,cicd
-DevOps,devops,devops
-Linux,devops,linux
-Backend,role_discipline,backend
-Backend,role_discipline,backend development
-Backend,role_discipline,back end
-Frontend,role_discipline,frontend
-Frontend,role_discipline,front end
-Full Stack,role_discipline,full stack
-Full Stack,role_discipline,fullstack
-QA/Testing,role_discipline,qa
-QA/Testing,role_discipline,testing
-QA/Testing,role_discipline,quality assurance
-Security,role_discipline,security
-Security,role_discipline,infosec
-Security,role_discipline,cybersecurity
-Security,role_discipline,cyber security
-Software Engineering,role_discipline,software engineering
-Software Engineering,role_discipline,software engineer
-Software Engineering,role_discipline,software development
-Blockchain,domain,blockchain
-Blockchain,domain,web3
+technology,tech_group,kind,alias
+Python,language,tool,python
+JavaScript,language,tool,javascript
+TypeScript,language,tool,typescript
+Java,language,tool,java
+Go,language,tool,golang
+C#,language,tool,c#
+C#,language,tool,csharp
+C#,language,tool,dotnet
+C++,language,tool,c++
+C++,language,tool,cplusplus
+Rust,language,tool,rust
+PHP,language,tool,php
+Ruby,language,tool,ruby
+SQL,language,tool,sql
+React,framework,tool,react
+Angular,framework,tool,angular
+Vue,framework,tool,vue
+Vue,framework,tool,vuejs
+Vue,framework,tool,vue.js
+Next.js,framework,tool,nextjs
+Next.js,framework,tool,next.js
+Node.js,framework,tool,nodejs
+Node.js,framework,tool,node.js
+FastAPI,framework,tool,fastapi
+Django,framework,tool,django
+Flask,framework,tool,flask
+Spring,framework,tool,spring
+Ruby on Rails,framework,tool,rails
+GraphQL,framework,tool,graphql
+PyTorch,ml,tool,pytorch
+TensorFlow,ml,tool,tensorflow
+Machine Learning,ml,concept,machine learning
+Artificial Intelligence,ml,concept,ai
+Artificial Intelligence,ml,concept,artificial intelligence
+LLM,ml,concept,llm
+LLM,ml,concept,llms
+NLP,ml,concept,nlp
+Computer Vision,ml,concept,computer vision
+Data Science,ml,concept,data science
+Data Science,ml,concept,data scientist
+Apache Spark,data_eng,tool,spark
+Big Data,data_eng,concept,big data
+Airflow,data_eng,tool,airflow
+dbt,data_eng,tool,dbt
+Snowflake,data_eng,tool,snowflake
+BigQuery,data_eng,tool,bigquery
+BigQuery,data_eng,tool,big query
+Databricks,data_eng,tool,databricks
+Kafka,data_eng,tool,kafka
+ETL,data_eng,concept,etl
+Data Engineering,data_eng,concept,data engineering
+Data Engineering,data_eng,concept,data engineer
+PostgreSQL,database,tool,postgresql
+PostgreSQL,database,tool,postgres
+MySQL,database,tool,mysql
+MongoDB,database,tool,mongodb
+MongoDB,database,tool,mongo
+Redis,database,tool,redis
+Elasticsearch,database,tool,elasticsearch
+Elasticsearch,database,tool,elastic search
+AWS,cloud,tool,aws
+AWS,cloud,tool,amazon web services
+Azure,cloud,tool,azure
+GCP,cloud,tool,gcp
+GCP,cloud,tool,google cloud
+Docker,devops,tool,docker
+Kubernetes,devops,tool,kubernetes
+Kubernetes,devops,tool,k8s
+Terraform,devops,tool,terraform
+CI/CD,devops,concept,ci cd
+CI/CD,devops,concept,cicd
+DevOps,devops,concept,devops
+Linux,devops,tool,linux
+Backend,role_discipline,role,backend
+Backend,role_discipline,role,backend development
+Backend,role_discipline,role,back end
+Frontend,role_discipline,role,frontend
+Frontend,role_discipline,role,front end
+Full Stack,role_discipline,role,full stack
+Full Stack,role_discipline,role,fullstack
+QA/Testing,role_discipline,role,qa
+QA/Testing,role_discipline,role,testing
+QA/Testing,role_discipline,role,quality assurance
+Security,role_discipline,role,security
+Security,role_discipline,role,infosec
+Security,role_discipline,role,cybersecurity
+Security,role_discipline,role,cyber security
+Software Engineering,role_discipline,role,software engineering
+Software Engineering,role_discipline,role,software engineer
+Software Engineering,role_discipline,role,software development
+Blockchain,domain,concept,blockchain
+Blockchain,domain,concept,web3
