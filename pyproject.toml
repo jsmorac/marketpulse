@@ -38,6 +38,7 @@ orchestration = [
 ]
 transform = [
     "dbt-postgres>=1.8,<1.12",
+    "dbt-core>=1.8,<1.12",
 ]
 dashboard = [
     "streamlit>=1.36",

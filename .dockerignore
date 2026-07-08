@@ -3,8 +3,12 @@
 *.key
 *.pem
 
-# ----- Private notes (kept out of the public repo) -----
+# ----- Private notes -----
 documentacion/
+
+# ----- Git -----
+.git/
+.github/
 
 # ----- Python -----
 __pycache__/
@@ -37,9 +41,15 @@ dbt/.user.yml
 .DS_Store
 Thumbs.db
 
+# ----- Runtime data (mounted as volumes, not baked into image) -----
+dagster_home/*
+!dagster_home/dagster.yaml
+
 # ----- Scratch / temp -----
 scratch_ingest.py
 scratch_remoteok.py
 
-dagster_home/*
-!dagster_home/dagster.yaml
+# ----- Docs (no las necesita el runtime) -----
+docs/
+README.md
+LICENSE
