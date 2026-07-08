@@ -419,7 +419,8 @@ def main() -> None:
                     use_container_width=True,
                 )
             st.caption(
-                "Solo tecnologías con al menos 5 menciones combinadas en las dos semanas, para evitar ruido de volúmenes muy bajos."
+                "Solo tecnologías con al menos 5 menciones combinadas en las dos "
+                "semanas, para evitar ruido de volúmenes muy bajos."
             )
 
         st.divider()
