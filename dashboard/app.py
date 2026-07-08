@@ -97,6 +97,52 @@ def load_pipeline_status() -> pd.DataFrame:
         return pd.read_sql(query, conn)
 
 
+@st.cache_data(ttl=600)
+def load_demand_timeseries(technologies: list[str]) -> pd.DataFrame:
+    """Serie diaria de job_count por tecnología, solo tools."""
+    query = """
+        SELECT snapshot_date, technology, job_count
+        FROM analytics.fct_tech_demand
+        WHERE kind = 'tool' AND technology = ANY(%(techs)s)
+        ORDER BY snapshot_date
+    """
+    with connect() as conn:
+        return pd.read_sql(query, conn, params={"techs": technologies})
+
+
+@st.cache_data(ttl=600)
+def load_movers(min_combined: int = 5) -> pd.DataFrame:
+    """Compara los últimos 7 días vs los 7 anteriores, por tecnología."""
+    query = """
+        with periods as (
+            select
+                case
+                    when snapshot_date > current_date - interval '7 days' then 'recent'
+                    when snapshot_date > current_date - interval '14 days' then 'prior'
+                end as period,
+                technology, tech_group, job_count
+            from analytics.fct_tech_demand
+            where kind = 'tool' and snapshot_date > current_date - interval '14 days'
+        )
+        select
+            technology,
+            tech_group,
+            sum(case when period = 'recent' then job_count else 0 end) as recent_count,
+            sum(case when period = 'prior' then job_count else 0 end) as prior_count
+        from periods
+        group by technology, tech_group
+    """
+    with connect() as conn:
+        df = pd.read_sql(query, conn)
+    df["combined"] = df["recent_count"] + df["prior_count"]
+    df = df[df["combined"] >= min_combined].copy()
+    df["delta"] = df["recent_count"] - df["prior_count"]
+    df["delta_pct"] = (
+        (df["recent_count"] - df["prior_count"]) / df["prior_count"].replace(0, 1) * 100
+    ).round(0)
+    return df.sort_values("delta", ascending=False)
+
+
 ACCENT = "#990F3D"
 NEUTRAL_BAR = "#D4D4D4"
 TRACK = "#F5F5F5"
@@ -242,8 +288,8 @@ def main() -> None:
     with col4, st.container(border=True):
         st.metric("Fuentes activas", 3)
 
-    tab_resumen, tab_tools, tab_roles, tab_cob = st.tabs(
-        ["Resumen", "Herramientas", "Roles y temas", "Cobertura"]
+    tab_resumen, tab_tools, tab_roles, tab_cob, tab_trend = st.tabs(
+        ["Resumen", "Herramientas", "Roles y temas", "Cobertura", "Tendencia"]
     )
 
     with tab_resumen:
@@ -338,6 +384,70 @@ def main() -> None:
             "Roadmap: filtrar ofertas no técnicas en la ingesta, en vez de seguir "
             "ampliando el seed."
         )
+
+    with tab_trend:
+        st.subheader("Quién sube, quién baja (últimos 7 días vs 7 anteriores)")
+        movers = load_movers()
+        if not movers.empty:
+            gainers = movers.head(5)
+            losers = movers.tail(5).sort_values("delta")
+            col_up, col_down = st.columns(2)
+            with col_up:
+                st.markdown("**📈 Subiendo**")
+                st.dataframe(
+                    gainers[["technology", "recent_count", "delta_pct"]].rename(
+                        columns={
+                            "technology": "Tecnología",
+                            "recent_count": "Jobs (7d)",
+                            "delta_pct": "% cambio",
+                        }
+                    ),
+                    hide_index=True,
+                    use_container_width=True,
+                )
+            with col_down:
+                st.markdown("**📉 Bajando**")
+                st.dataframe(
+                    losers[["technology", "recent_count", "delta_pct"]].rename(
+                        columns={
+                            "technology": "Tecnología",
+                            "recent_count": "Jobs (7d)",
+                            "delta_pct": "% cambio",
+                        }
+                    ),
+                    hide_index=True,
+                    use_container_width=True,
+                )
+            st.caption(
+                "Solo tecnologías con al menos 5 menciones combinadas en las dos semanas, para evitar ruido de volúmenes muy bajos."
+            )
+
+        st.divider()
+        st.subheader("Evolución diaria de demanda por tecnología")
+        cumulative = load_demand_cumulative()
+        default_techs = cumulative[cumulative["kind"] == "tool"].head(6)["technology"].tolist()
+        all_tools = cumulative[cumulative["kind"] == "tool"]["technology"].tolist()
+        selected = st.multiselect(
+            "Tecnologías a comparar", options=all_tools, default=default_techs
+        )
+        if selected:
+            ts = load_demand_timeseries(selected)
+            fig = px.line(
+                ts,
+                x="snapshot_date",
+                y="job_count",
+                color="technology",
+                labels={"snapshot_date": "", "job_count": "Jobs", "technology": ""},
+            )
+            fig.update_layout(height=450, **PLOTLY_LAYOUT)
+            st.plotly_chart(fig, use_container_width=True)
+            st.caption(
+                "Nota: Hacker News aporta datos solo mensualmente (día 3 de cada mes, "
+                "corrección de sesgo del 02/07) — tecnologías que dependen parcialmente "
+                "de HN pueden mostrar un salto ese día. Himalayas y RemoteOK son diarios."
+            )
+        else:
+            st.info("Selecciona al menos una tecnología para ver su tendencia.")
 
 
 if __name__ == "__main__":
